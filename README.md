@@ -9,7 +9,7 @@ dependencies:
   moe_flutter_marketing:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Marketing.git
-      ref: main
+      ref: master
 ```
 
 ## Usage
