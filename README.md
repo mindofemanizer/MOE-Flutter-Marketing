@@ -1,6 +1,6 @@
 # MOE-Flutter-Marketing
 
-Marketing package for MOE Flutter ecosystem — coupons, promotions, campaigns.
+Marketing package for MOE Flutter ecosystem â€” coupons, promotions, campaigns.
 
 ## Installation
 
@@ -9,7 +9,7 @@ dependencies:
   moe_flutter_marketing:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Marketing.git
-      ref: master
+      ref: v1.0.0
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ await ref.read(couponsProvider.notiant).validate(
 
 switch (state) {
   case CouponLoaded(:final coupon):
-    print('✅ Valid coupon!');
+    print('âœ… Valid coupon!');
     print('${coupon.name}: ${coupon.value}% off');
     
     // Apply discount to cart
