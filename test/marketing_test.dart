@@ -84,11 +84,11 @@ void main() {
 
   group('CouponStatus', () {
     test('isAvailable returns true only for unused and not expired', () {
-      final unusedCoupon = CouponStatus.unused;
+      const unusedCoupon = CouponStatus.unused;
       expect(unusedCoupon.isAvailable, isTrue);
       
       // Simulate expired status
-      final expiredCoupon = CouponStatus.expired;
+      const expiredCoupon = CouponStatus.expired;
       expect(expiredCoupon.isAvailable, isFalse);
       expect(expiredCoupon.isExpired, isTrue);
     });

@@ -1,4 +1,5 @@
 /// Barrel file — public API for moe_flutter_marketing.
+library;
 export 'src/config/marketing_config.dart';
 export 'src/models/promotion_type.dart';
 export 'src/models/coupon_status.dart';

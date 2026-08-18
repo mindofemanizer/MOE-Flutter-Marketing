@@ -78,7 +78,7 @@ class MarketingRepository {
           'name': name,
           'channel': channel,
           'target_user_ids': targetUserIds,
-          if (message != null) 'message': message,
+          'message': ?message,
           if (scheduledAt != null)
             'scheduled_at': scheduledAt.toIso8601String(),
         },
