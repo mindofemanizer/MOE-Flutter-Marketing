@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:moe_flutter_core/moe_flutter_core.dart';
-import 'package:moe_flutter_marketing/src/config/marketing_config.dart';
 import 'package:moe_flutter_marketing/src/models/coupon_model.dart';
 import 'package:moe_flutter_marketing/src/services/marketing_repository.dart';
 
@@ -10,9 +9,13 @@ sealed class CouponState {
   const CouponState();
 }
 
-final class CouponInitial extends CouponState {}
+final class CouponInitial extends CouponState {
+  const CouponInitial();
+}
 
-final class CouponLoading extends CouponState {}
+final class CouponLoading extends CouponState {
+  const CouponLoading();
+}
 
 final class CouponLoaded extends CouponState {
   final CouponModel coupon;
@@ -30,7 +33,10 @@ class CouponsNotifier extends StateNotifier<CouponState> {
 
   CouponsNotifier(this._repository) : super(const CouponInitial());
 
-  Future<AppResult<CouponModel>> validate(String code, {double? cartTotal}) async {
+  Future<AppResult<CouponModel>> validate(
+    String code, {
+    double? cartTotal,
+  }) async {
     state = const CouponLoading();
 
     final result = await _repository.validateCoupon(code, cartTotal: cartTotal);
@@ -59,6 +65,6 @@ final marketingRepositoryProvider = Provider<MarketingRepository>((ref) {
 });
 
 /// Provider for CouponsNotifier.
-final couponsProvider = StateNotifierProviderFactory<CouponsNotifier>(
+final couponsProvider = StateNotifierProvider<CouponsNotifier, CouponState>(
   (ref) => CouponsNotifier(ref.watch(marketingRepositoryProvider)),
 );

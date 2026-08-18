@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:moe_flutter_core/moe_flutter_core.dart';
 import 'package:moe_flutter_marketing/src/config/marketing_config.dart';
@@ -8,29 +7,31 @@ import 'package:moe_flutter_marketing/src/models/coupon_model.dart';
 /// Repository for marketing operations.
 class MarketingRepository {
   final Dio _dio;
-  final MoeMarketingConfig _config;
 
-  MarketingRepository(this._dio, this._config);
+  MarketingRepository(this._dio, MoeMarketingConfig _);
 
   // ── Coupons ────────────────────────────────────────────────
 
   /// Validate coupon code.
-  Future<AppResult<CouponModel>> validateCoupon(String code, {double? cartTotal}) async {
+  Future<AppResult<CouponModel>> validateCoupon(
+    String code, {
+    double? cartTotal,
+  }) async {
     try {
       final params = <String, dynamic>{'code': code};
       if (cartTotal != null) {
         params['cart_total'] = cartTotal;
       }
-      
-      final response = await _dio.get('/coupons/validate', queryParameters: params);
+
+      final response = await _dio.get(
+        '/coupons/validate',
+        queryParameters: params,
+      );
       return Ok(CouponModel.fromJson(response.data as Map<String, dynamic>));
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(AppFailure(type: FailureType.unknown, message: e.toString()));
     }
   }
 
@@ -56,10 +57,7 @@ class MarketingRepository {
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(AppFailure(type: FailureType.unknown, message: e.toString()));
     }
   }
 
@@ -74,28 +72,31 @@ class MarketingRepository {
     DateTime? scheduledAt,
   }) async {
     try {
-      await _dio.post('/campaigns', data: {
-        'name': name,
-        'channel': channel,
-        'target_user_ids': targetUserIds,
-        if (message != null) 'message': message,
-        if (scheduledAt != null) 'scheduled_at': scheduledAt.toIso8601String(),
-      });
+      await _dio.post(
+        '/campaigns',
+        data: {
+          'name': name,
+          'channel': channel,
+          'target_user_ids': targetUserIds,
+          if (message != null) 'message': message,
+          if (scheduledAt != null)
+            'scheduled_at': scheduledAt.toIso8601String(),
+        },
+      );
       return const Ok(null);
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(AppFailure(type: FailureType.unknown, message: e.toString()));
     }
   }
 
   // ── Analytics ──────────────────────────────────────────────
 
   /// Get campaign performance metrics.
-  Future<AppResult<Map<String, double>>> getCampaignMetrics(String campaignId) async {
+  Future<AppResult<Map<String, double>>> getCampaignMetrics(
+    String campaignId,
+  ) async {
     try {
       final response = await _dio.get('/campaigns/$campaignId/metrics');
       final data = response.data as Map<String, dynamic>;
@@ -107,10 +108,7 @@ class MarketingRepository {
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(AppFailure(type: FailureType.unknown, message: e.toString()));
     }
   }
 }

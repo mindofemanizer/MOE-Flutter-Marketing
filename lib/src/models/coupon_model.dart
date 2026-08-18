@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 /// Promotional coupon/discount code.
 class CouponModel extends Equatable {
   final String id;
   final String code;
   final String name;
-  final String description;
+  final String? description;
   final double value;
   final String? minimumOrder;
   final String? maximumDiscount;
@@ -25,12 +27,12 @@ class CouponModel extends Equatable {
     this.maximumDiscount,
     this.applicableProducts,
     this.applicableCategories,
-    this.maxUsesPerUser,
+    this.maxUsesPerUser = 1,
     required this.validFrom,
     required this.validUntil,
     required this.createdAt,
     required this.updatedAt,
-  }) : assert value > 0;
+  }) : assert(value > 0);
 
   factory CouponModel.fromJson(Map<String, dynamic> json) {
     return CouponModel(
@@ -43,7 +45,7 @@ class CouponModel extends Equatable {
       maximumDiscount: json['maximum_discount'] as String?,
       applicableProducts: (json['applicable_products'] as List<dynamic>?)?.map((p) => p as String).toList(),
       applicableCategories: json['applicable_categories'] as String?,
-      maxUsesPerUser: json['max_uses_per_user'] as int?,
+      maxUsesPerUser: json['max_uses_per_user'] as int? ?? 1,
       validFrom: DateTime.parse(json['valid_from'] as String),
       validUntil: DateTime.parse(json['valid_until'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -62,7 +64,7 @@ class CouponModel extends Equatable {
       if (maximumDiscount != null) 'maximum_discount': maximumDiscount,
       if (applicableProducts != null) 'applicable_products': applicableProducts,
       if (applicableCategories != null) 'applicable_categories': applicableCategories,
-      if (maxUsesPerUser != null) 'max_uses_per_user': maxUsesPerUser,
+       'max_uses_per_user': maxUsesPerUser,
       'valid_from': validFrom.toIso8601String(),
       'valid_until': validUntil.toIso8601String(),
       'created_at': createdAt.toIso8601String(),

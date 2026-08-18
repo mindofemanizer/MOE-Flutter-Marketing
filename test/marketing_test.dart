@@ -4,7 +4,7 @@ import 'package:moe_flutter_marketing/moe_flutter_marketing.dart';
 void main() {
   group('CouponModel', () {
     test('isValid returns true when current time is in range', () {
-      const now = DateTime(2026, 8, 10);
+      final now = DateTime(2026, 8, 10);
       final coupon = CouponModel(
         id: 'c1',
         code: 'SUMMER25',
@@ -21,7 +21,7 @@ void main() {
     });
 
     test('isExpired returns true when past validity date', () {
-      const coupon = CouponModel(
+      final coupon = CouponModel(
         id: 'c1',
         code: 'EXPIRED',
         name: 'Expired Promo',
@@ -37,7 +37,7 @@ void main() {
     });
 
     test('notYetActive returns true when before validFrom', () {
-      const coupon = CouponModel(
+      final coupon = CouponModel(
         id: 'c1',
         code: 'UPCOMING',
         name: 'Coming Soon',
